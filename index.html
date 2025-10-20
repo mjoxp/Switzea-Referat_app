@@ -135,6 +135,14 @@
             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
+        /* Highlight */
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
         /* Buttons */
         button { 
             background-color: #1976d2; 
@@ -158,7 +166,7 @@
 
         /* Right Panel */
         .right-panel { 
-            width: 320px; 
+            width: 340px; 
             background: white; 
             padding: 20px;
             border-radius: 8px;
@@ -189,9 +197,36 @@
             max-height: calc(100vh - 240px);
             overflow-y: auto;
         }
-        #oldMeetingsList .meeting { 
-            margin-bottom: 8px;
-            font-size: 14px;
+
+        /* Search Result Item */
+        .search-result {
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .search-result:hover {
+            background: #e3f2fd;
+            border-color: #1976d2;
+            transform: translateX(3px);
+        }
+        .search-result-title {
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 4px;
+        }
+        .search-result-location {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        .search-result-snippet {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.4;
         }
 
         /* Empty State */
@@ -249,9 +284,9 @@
             <div class="right-panel">
                 <h3>🔍 Søg i referater</h3>
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Søg efter titel, dato eller indhold..." />
+                    <input type="text" id="searchInput" placeholder="Søg efter ord eller sætninger..." />
                 </div>
-                <div id="oldMeetingsList"></div>
+                <div id="searchResults"></div>
             </div>
         </div>
     </div>
@@ -260,6 +295,7 @@
         // Data storage
         let meetings = [];
         let currentMeetingId = null;
+        let currentSearchTerm = '';
 
         // Create new meeting
         function newMeeting() {
@@ -282,10 +318,9 @@
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
-            meetings.unshift(data); // Add to beginning
+            meetings.unshift(data);
             saveMeetingsLocal();
             renderMeetings();
-            renderOldMeetingsList();
             openMeeting(id);
         }
 
@@ -311,31 +346,8 @@
             });
         }
 
-        // Render old meetings list in right panel
-        function renderOldMeetingsList(filteredMeetings) {
-            const container = document.getElementById('oldMeetingsList');
-            container.innerHTML = '';
-            const list = filteredMeetings !== undefined ? filteredMeetings : meetings;
-
-            if (list.length === 0) {
-                container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Ingen resultater</p>';
-                return;
-            }
-
-            list.forEach(m => {
-                const div = document.createElement('div');
-                div.className = 'meeting';
-                if (m.id === currentMeetingId) {
-                    div.classList.add('active');
-                }
-                div.innerHTML = `<strong>${m.title}</strong><br><small style="color: #666;">${m.date}</small>`;
-                div.onclick = () => openMeeting(m.id);
-                container.appendChild(div);
-            });
-        }
-
         // Open and display a meeting
-        function openMeeting(id) {
+        function openMeeting(id, highlightPointIndex = null) {
             currentMeetingId = id;
             const meeting = meetings.find(x => x.id === id);
             if (!meeting) return;
@@ -351,6 +363,14 @@
             meeting.agenda.forEach((point, i) => {
                 const div = document.createElement('div');
                 div.className = 'agenda-point';
+                div.id = 'point-' + i;
+
+                // Highlight hvis dette er punktet vi søgte efter
+                if (highlightPointIndex === i) {
+                    div.style.background = '#fff9c4';
+                    div.style.borderLeft = '4px solid #fbc02d';
+                }
+
                 div.innerHTML = `
                     <h4>${point.title}</h4>
                     <textarea id='a${i}' placeholder='Skriv referat indhold her...'>${point.content}</textarea>
@@ -374,9 +394,17 @@
             buttonContainer.appendChild(deleteBtn);
             contentDiv.appendChild(buttonContainer);
 
-            // Update active state in lists
+            // Scroll til highlight hvis specificeret
+            if (highlightPointIndex !== null) {
+                setTimeout(() => {
+                    const element = document.getElementById('point-' + highlightPointIndex);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 100);
+            }
+
             renderMeetings();
-            renderOldMeetingsList();
         }
 
         // Save meeting
@@ -393,6 +421,12 @@
 
             meeting.updatedAt = new Date().toISOString();
             saveMeetingsLocal();
+
+            // Re-render search if there's an active search
+            if (currentSearchTerm) {
+                performSearch(currentSearchTerm);
+            }
+
             alert('✅ Referat gemt lokalt!');
         }
 
@@ -415,28 +449,90 @@
 
             currentMeetingId = null;
             renderMeetings();
-            renderOldMeetingsList();
+
+            // Re-render search if active
+            if (currentSearchTerm) {
+                performSearch(currentSearchTerm);
+            }
         }
 
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase().trim();
+        // Advanced search functionality
+        function performSearch(term) {
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '';
 
-            if (term === '') {
-                renderOldMeetingsList();
+            if (!term || term.trim() === '') {
+                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Indtast søgeord</p>';
                 return;
             }
 
-            const filtered = meetings.filter(m =>
-                m.title.toLowerCase().includes(term) ||
-                m.date.toLowerCase().includes(term) ||
-                m.agenda.some(p => 
-                    p.title.toLowerCase().includes(term) ||
-                    p.content.toLowerCase().includes(term)
-                )
-            );
+            const searchTerm = term.toLowerCase().trim();
+            const results = [];
 
-            renderOldMeetingsList(filtered);
+            meetings.forEach(meeting => {
+                // Search in title
+                if (meeting.title.toLowerCase().includes(searchTerm)) {
+                    results.push({
+                        meetingId: meeting.id,
+                        meetingTitle: meeting.title,
+                        meetingDate: meeting.date,
+                        location: 'Titel',
+                        snippet: meeting.title,
+                        pointIndex: null
+                    });
+                }
+
+                // Search in agenda points
+                meeting.agenda.forEach((point, index) => {
+                    if (point.content.toLowerCase().includes(searchTerm)) {
+                        // Find context around the search term
+                        const contentLower = point.content.toLowerCase();
+                        const position = contentLower.indexOf(searchTerm);
+                        const start = Math.max(0, position - 40);
+                        const end = Math.min(point.content.length, position + searchTerm.length + 40);
+                        let snippet = point.content.substring(start, end);
+
+                        if (start > 0) snippet = '...' + snippet;
+                        if (end < point.content.length) snippet = snippet + '...';
+
+                        // Highlight the search term in snippet
+                        const regex = new RegExp(`(${searchTerm})`, 'gi');
+                        snippet = snippet.replace(regex, '<span class="highlight">$1</span>');
+
+                        results.push({
+                            meetingId: meeting.id,
+                            meetingTitle: meeting.title,
+                            meetingDate: meeting.date,
+                            location: point.title,
+                            snippet: snippet,
+                            pointIndex: index
+                        });
+                    }
+                });
+            });
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Ingen resultater fundet</p>';
+                return;
+            }
+
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.className = 'search-result';
+                div.innerHTML = `
+                    <div class="search-result-title">${result.meetingTitle}</div>
+                    <div class="search-result-location">📍 ${result.location} • ${result.meetingDate}</div>
+                    <div class="search-result-snippet">${result.snippet}</div>
+                `;
+                div.onclick = () => openMeeting(result.meetingId, result.pointIndex);
+                resultsContainer.appendChild(div);
+            });
+        }
+
+        // Search event listener
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            performSearch(currentSearchTerm);
         });
 
         // Save to localStorage
@@ -461,7 +557,9 @@
         window.onload = () => {
             loadMeetingsLocal();
             renderMeetings();
-            renderOldMeetingsList();
+
+            const resultsContainer = document.getElementById('searchResults');
+            resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Indtast søgeord</p>';
         };
     </script>
 </body>
