@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SWITZEA Referat App</title>
+    <!-- HTML2PDF bibliotek -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -163,6 +165,18 @@
         button:active {
             transform: scale(0.98);
         }
+        .btn-export {
+            background: #2e7d32;
+        }
+        .btn-export:hover {
+            background: #1b5e20;
+        }
+        .btn-pdf {
+            background: #c62828;
+        }
+        .btn-pdf:hover {
+            background: #b71c1c;
+        }
 
         /* Right Panel */
         .right-panel { 
@@ -193,7 +207,7 @@
             border-color: #1976d2;
             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
-        #oldMeetingsList {
+        #searchResults {
             max-height: calc(100vh - 240px);
             overflow-y: auto;
         }
@@ -239,6 +253,11 @@
             color: #666;
         }
 
+        /* Export Template Styles (hidden, used for PDF/Word generation) */
+        .export-template {
+            display: none;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .app { flex-direction: column; }
@@ -259,6 +278,14 @@
                 width: 100%; 
                 margin-top: 16px;
             }
+        }
+
+        /* Print/Export Styles */
+        @media print {
+            body { background: white; }
+            .sidebar, .right-panel, button { display: none !important; }
+            .main { padding: 0; }
+            #meetingContent { box-shadow: none; }
         }
     </style>
 </head>
@@ -290,6 +317,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Hidden export template -->
+    <div id="exportTemplate" class="export-template"></div>
 
     <script>
         // Data storage
@@ -365,7 +395,6 @@
                 div.className = 'agenda-point';
                 div.id = 'point-' + i;
 
-                // Highlight hvis dette er punktet vi søgte efter
                 if (highlightPointIndex === i) {
                     div.style.background = '#fff9c4';
                     div.style.borderLeft = '4px solid #fbc02d';
@@ -385,16 +414,27 @@
             saveBtn.textContent = '💾 Gem referat';
             saveBtn.onclick = () => saveMeeting(meeting.id);
 
+            const exportWordBtn = document.createElement('button');
+            exportWordBtn.textContent = '📄 Download Word';
+            exportWordBtn.className = 'btn-export';
+            exportWordBtn.onclick = () => exportToWord(meeting.id);
+
+            const exportPdfBtn = document.createElement('button');
+            exportPdfBtn.textContent = '📑 Download PDF';
+            exportPdfBtn.className = 'btn-pdf';
+            exportPdfBtn.onclick = () => exportToPDF(meeting.id);
+
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = '🗑️ Slet referat';
             deleteBtn.style.background = '#d32f2f';
             deleteBtn.onclick = () => deleteMeeting(meeting.id);
 
             buttonContainer.appendChild(saveBtn);
+            buttonContainer.appendChild(exportWordBtn);
+            buttonContainer.appendChild(exportPdfBtn);
             buttonContainer.appendChild(deleteBtn);
             contentDiv.appendChild(buttonContainer);
 
-            // Scroll til highlight hvis specificeret
             if (highlightPointIndex !== null) {
                 setTimeout(() => {
                     const element = document.getElementById('point-' + highlightPointIndex);
@@ -405,6 +445,160 @@
             }
 
             renderMeetings();
+        }
+
+        // Export to Word (HTML format that Word can open)
+        function exportToWord(id) {
+            // Save current content first
+            saveMeeting(id);
+
+            const meeting = meetings.find(m => m.id === id);
+            if (!meeting) return;
+
+            const wordContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset='utf-8'>
+                    <title>${meeting.title}</title>
+                    <style>
+                        body { 
+                            font-family: 'Calibri', 'Arial', sans-serif; 
+                            line-height: 1.6;
+                            max-width: 800px;
+                            margin: 40px auto;
+                            padding: 40px;
+                        }
+                        .header {
+                            text-align: center;
+                            border-bottom: 3px solid #1976d2;
+                            padding-bottom: 20px;
+                            margin-bottom: 30px;
+                        }
+                        .logo {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #1976d2;
+                            margin-bottom: 10px;
+                        }
+                        h1 {
+                            color: #1976d2;
+                            font-size: 28px;
+                            margin: 10px 0;
+                        }
+                        .meta {
+                            color: #666;
+                            font-size: 14px;
+                            margin-top: 10px;
+                        }
+                        .agenda-item {
+                            margin-bottom: 25px;
+                            page-break-inside: avoid;
+                        }
+                        .agenda-title {
+                            background: #e3f2fd;
+                            padding: 10px 15px;
+                            border-left: 4px solid #1976d2;
+                            font-weight: bold;
+                            font-size: 16px;
+                            margin-bottom: 10px;
+                        }
+                        .agenda-content {
+                            padding: 10px 15px;
+                            border-left: 2px solid #e0e0e0;
+                            margin-left: 10px;
+                            min-height: 40px;
+                        }
+                        .footer {
+                            margin-top: 50px;
+                            padding-top: 20px;
+                            border-top: 1px solid #e0e0e0;
+                            text-align: center;
+                            color: #999;
+                            font-size: 12px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <div class="logo">SWITZEA ApS</div>
+                        <h1>${meeting.title}</h1>
+                        <div class="meta">
+                            <p><strong>Dato:</strong> ${meeting.date}</p>
+                            ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
+                            <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
+                        </div>
+                    </div>
+
+                    ${meeting.agenda.map(point => `
+                        <div class="agenda-item">
+                            <div class="agenda-title">${point.title}</div>
+                            <div class="agenda-content">${point.content || '<em>Intet indhold</em>'}</div>
+                        </div>
+                    `).join('')}
+
+                    <div class="footer">
+                        <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
+                    </div>
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob([wordContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${meeting.title.replace(/[^a-z0-9]/gi, '_')}_${meeting.date}.doc`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Export to PDF
+        function exportToPDF(id) {
+            // Save current content first
+            saveMeeting(id);
+
+            const meeting = meetings.find(m => m.id === id);
+            if (!meeting) return;
+
+            const exportDiv = document.getElementById('exportTemplate');
+            exportDiv.innerHTML = `
+                <div style="font-family: 'Arial', sans-serif; padding: 40px; max-width: 800px; margin: 0 auto;">
+                    <div style="text-align: center; border-bottom: 3px solid #1976d2; padding-bottom: 20px; margin-bottom: 30px;">
+                        <div style="font-size: 24px; font-weight: bold; color: #1976d2; margin-bottom: 10px;">SWITZEA ApS</div>
+                        <h1 style="color: #1976d2; font-size: 28px; margin: 10px 0;">${meeting.title}</h1>
+                        <div style="color: #666; font-size: 14px; margin-top: 10px;">
+                            <p><strong>Dato:</strong> ${meeting.date}</p>
+                            ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
+                            <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
+                        </div>
+                    </div>
+
+                    ${meeting.agenda.map(point => `
+                        <div style="margin-bottom: 25px; page-break-inside: avoid;">
+                            <div style="background: #e3f2fd; padding: 10px 15px; border-left: 4px solid #1976d2; font-weight: bold; font-size: 16px; margin-bottom: 10px;">
+                                ${point.title}
+                            </div>
+                            <div style="padding: 10px 15px; border-left: 2px solid #e0e0e0; margin-left: 10px; min-height: 40px; white-space: pre-wrap;">
+                                ${point.content || '<em>Intet indhold</em>'}
+                            </div>
+                        </div>
+                    `).join('')}
+
+                    <div style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #e0e0e0; text-align: center; color: #999; font-size: 12px;">
+                        <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
+                    </div>
+                </div>
+            `;
+
+            const opt = {
+                margin: 10,
+                filename: `${meeting.title.replace(/[^a-z0-9]/gi, '_')}_${meeting.date}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(exportDiv).save();
         }
 
         // Save meeting
@@ -422,7 +616,6 @@
             meeting.updatedAt = new Date().toISOString();
             saveMeetingsLocal();
 
-            // Re-render search if there's an active search
             if (currentSearchTerm) {
                 performSearch(currentSearchTerm);
             }
@@ -450,7 +643,6 @@
             currentMeetingId = null;
             renderMeetings();
 
-            // Re-render search if active
             if (currentSearchTerm) {
                 performSearch(currentSearchTerm);
             }
@@ -470,7 +662,6 @@
             const results = [];
 
             meetings.forEach(meeting => {
-                // Search in title
                 if (meeting.title.toLowerCase().includes(searchTerm)) {
                     results.push({
                         meetingId: meeting.id,
@@ -482,10 +673,8 @@
                     });
                 }
 
-                // Search in agenda points
                 meeting.agenda.forEach((point, index) => {
                     if (point.content.toLowerCase().includes(searchTerm)) {
-                        // Find context around the search term
                         const contentLower = point.content.toLowerCase();
                         const position = contentLower.indexOf(searchTerm);
                         const start = Math.max(0, position - 40);
@@ -495,7 +684,6 @@
                         if (start > 0) snippet = '...' + snippet;
                         if (end < point.content.length) snippet = snippet + '...';
 
-                        // Highlight the search term in snippet
                         const regex = new RegExp(`(${searchTerm})`, 'gi');
                         snippet = snippet.replace(regex, '<span class="highlight">$1</span>');
 
