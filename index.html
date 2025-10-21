@@ -142,6 +142,45 @@
             box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
+        /* Agenda input section */
+        .agenda-input-section {
+            background: #fff9e6;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffa726;
+        }
+        .agenda-input-section label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .agenda-input-section textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .agenda-input-section button {
+            background: #ffa726;
+            margin: 0;
+        }
+        .agenda-input-section button:hover {
+            background: #fb8c00;
+        }
+        .agenda-input-section .help-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
         /* Agenda Points */
         .agenda-point { 
             background: #f8f9fa; 
@@ -298,7 +337,7 @@
                 margin: 0;
                 padding: 0;
             }
-            .app, .sidebar, .right-panel, button, .no-print { 
+            .app, .sidebar, .right-panel, button, .no-print, .agenda-input-section { 
                 display: none !important; 
             }
             .print-view {
@@ -446,6 +485,64 @@
             openMeeting(id);
         }
 
+        // Parse agenda from pasted text
+        function parseAgendaFromText(text) {
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            const agenda = [];
+
+            lines.forEach(line => {
+                // Match patterns like "1.", "Punkt 1:", "1 -", "1)", etc.
+                const match = line.match(/^(\d+|punkt\s*\d+)[.:)\-\s]*/i);
+                if (match) {
+                    // Remove the number/prefix and keep the rest
+                    const title = line.replace(/^(\d+|punkt\s*\d+)[.:)\-\s]*/i, '').trim();
+                    if (title) {
+                        agenda.push({
+                            title: title,
+                            content: ''
+                        });
+                    }
+                } else if (line.length > 0) {
+                    // If no number pattern, just add as-is
+                    agenda.push({
+                        title: line,
+                        content: ''
+                    });
+                }
+            });
+
+            return agenda.length > 0 ? agenda : null;
+        }
+
+        // Apply parsed agenda to current meeting
+        function applyParsedAgenda() {
+            const agendaInput = document.getElementById('agendaInputText');
+            const text = agendaInput.value.trim();
+
+            if (!text) {
+                alert('Indtast venligst en dagsorden');
+                return;
+            }
+
+            const parsedAgenda = parseAgendaFromText(text);
+
+            if (!parsedAgenda || parsedAgenda.length === 0) {
+                alert('Kunne ikke parse dagsordenen. Prøv at formatere det med numre (fx "1. Punkt", "2. Andet punkt")');
+                return;
+            }
+
+            const meeting = meetings.find(m => m.id === currentMeetingId);
+            if (!meeting) return;
+
+            meeting.agenda = parsedAgenda;
+            saveMeetingsLocal();
+
+            // Reopen to show new agenda
+            openMeeting(currentMeetingId);
+
+            alert(`✅ Dagsorden opdateret med ${parsedAgenda.length} punkter!`);
+        }
+
         // Render meetings in left sidebar
         function renderMeetings() {
             const listDiv = document.getElementById('meetingsList');
@@ -474,10 +571,9 @@
             const meeting = meetings.find(x => x.id === id);
             if (!meeting) return;
 
-            // Ensure participants field exists (for backwards compatibility)
-            if (meeting.participants === undefined) {
-                meeting.participants = '';
-            }
+            // Ensure fields exist
+            if (meeting.participants === undefined) meeting.participants = '';
+            if (meeting.referent === undefined) meeting.referent = '';
 
             const contentDiv = document.getElementById('meetingContent');
             contentDiv.innerHTML = `
@@ -492,6 +588,13 @@
 
                     <label>✍️ Referent:</label>
                     <input type="text" id="referentField" placeholder="Navn på referent" value="${meeting.referent || ''}" />
+                </div>
+
+                <div class="agenda-input-section">
+                    <label>📝 Indsæt ny dagsorden (overskriver eksisterende punkter):</label>
+                    <textarea id="agendaInputText" placeholder="Indsæt dagsorden her, fx:\n1. Velkommen\n2. Status på projekter\n3. Eventuelt"></textarea>
+                    <button onclick="applyParsedAgenda()">🔄 Opdater dagsorden</button>
+                    <div class="help-text">Tip: Formater med numre (1., 2., etc.) eller "Punkt 1:", "Punkt 2:" for bedst resultat</div>
                 </div>
             `;
 
@@ -640,7 +743,7 @@
                         </div>
                     </div>
 
-                    ${meeting.agenda.map(point => `
+                    ${meeting.agenda.map((point, index) => `
                         <div class="agenda-item">
                             <div class="agenda-title">${point.title}</div>
                             <div class="agenda-content">${point.content || '<em>Intet indhold</em>'}</div>
@@ -705,7 +808,7 @@
             const meeting = meetings.find(m => m.id === id);
             if (!meeting) return;
 
-            // Save metadata fields
+            // Save metadata
             const participantsField = document.getElementById('participantsField');
             const referentField = document.getElementById('referentField');
             if (participantsField) meeting.participants = participantsField.value;
@@ -779,7 +882,6 @@
                     });
                 }
 
-                // Search in participants
                 if (meeting.participants && meeting.participants.toLowerCase().includes(searchTerm)) {
                     results.push({
                         meetingId: meeting.id,
@@ -835,18 +937,15 @@
             });
         }
 
-        // Search event listener
         document.getElementById('searchInput').addEventListener('input', (e) => {
             currentSearchTerm = e.target.value;
             performSearch(currentSearchTerm);
         });
 
-        // Save to localStorage
         function saveMeetingsLocal() {
             localStorage.setItem('switzea-referater', JSON.stringify(meetings));
         }
 
-        // Load from localStorage
         function loadMeetingsLocal() {
             const saved = localStorage.getItem('switzea-referater');
             if (saved) {
@@ -859,7 +958,6 @@
             }
         }
 
-        // Initialize app on load
         window.onload = () => {
             loadMeetingsLocal();
             renderMeetings();
