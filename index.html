@@ -326,7 +326,7 @@
             color: #666;
         }
 
-        /* Print/PDF Styles */
+        /* Print/PDF Styles - FORBEDRET DESIGN */
         .print-view {
             display: none;
         }
@@ -342,57 +342,176 @@
             }
             .print-view {
                 display: block !important;
-                padding: 40px;
-                font-family: 'Arial', sans-serif;
+                padding: 30px;
+                font-family: 'Calibri', 'Arial', sans-serif;
+                max-width: 800px;
+                margin: 0 auto;
+                color: #333;
             }
+
+            /* ELEGANT HEADER DESIGN */
             .print-header {
+                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                padding: 30px;
+                border-radius: 12px;
                 text-align: center;
-                border-bottom: 3px solid #1976d2;
-                padding-bottom: 20px;
                 margin-bottom: 30px;
+                border: 3px solid #1976d2;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             }
             .print-logo {
-                font-size: 24px;
-                font-weight: bold;
-                color: #1976d2;
-                margin-bottom: 10px;
+                font-size: 32px;
+                font-weight: 800;
+                color: #0d47a1;
+                margin-bottom: 15px;
+                letter-spacing: 2px;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
             .print-title {
                 color: #1976d2;
                 font-size: 28px;
-                margin: 10px 0;
+                margin: 15px 0;
+                font-weight: 700;
             }
-            .print-meta {
-                color: #666;
+
+            /* METADATA SECTION - PROFESSIONEL GRID */
+            .print-metadata {
+                background: #f8fbfd;
+                padding: 25px;
+                border-radius: 10px;
+                margin: 25px 0;
+                border-left: 6px solid #1976d2;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            }
+            .print-metadata-full {
+                grid-column: 1 / -1;
+            }
+            .print-metadata-item {
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                border: 1px solid #e3f2fd;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            }
+            .print-metadata-label {
+                font-weight: 700;
+                color: #1565c0;
                 font-size: 14px;
-                margin-top: 10px;
+                margin-bottom: 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
+            .print-metadata-value {
+                color: #333;
+                font-size: 16px;
+                line-height: 1.4;
+            }
+
+            /* AGENDA OVERVIEW - ELEGANT LISTE */
+            .print-agenda-overview {
+                background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+                padding: 25px;
+                border-radius: 10px;
+                margin: 30px 0;
+                border-left: 6px solid #ffa726;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            }
+            .print-agenda-overview h3 {
+                color: #e65100;
+                font-size: 22px;
+                margin-bottom: 20px;
+                font-weight: 700;
+                text-align: center;
+            }
+            .print-agenda-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: grid;
+                gap: 12px;
+            }
+            .print-agenda-list li {
+                background: white;
+                padding: 12px 18px;
+                border-radius: 6px;
+                border-left: 4px solid #ff9800;
+                font-weight: 600;
+                color: #bf360c;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+
+            /* SECTION DIVIDER */
+            .print-section-divider {
+                text-align: center;
+                margin: 40px 0;
+                position: relative;
+            }
+            .print-section-divider::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #1976d2, transparent);
+            }
+            .print-section-title {
+                background: white;
+                color: #1565c0;
+                font-size: 24px;
+                font-weight: 700;
+                padding: 0 25px;
+                display: inline-block;
+            }
+
+            /* AGENDA ITEMS - MODERNE CARDS */
             .print-agenda-item {
-                margin-bottom: 25px;
+                margin-bottom: 30px;
                 page-break-inside: avoid;
+                background: white;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+                border: 1px solid #e3f2fd;
             }
             .print-agenda-title {
-                background: #e3f2fd;
-                padding: 10px 15px;
-                border-left: 4px solid #1976d2;
-                font-weight: bold;
-                font-size: 16px;
-                margin-bottom: 10px;
+                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+                padding: 18px 25px;
+                font-weight: 700;
+                font-size: 18px;
+                color: #0d47a1;
+                border-bottom: 3px solid #1976d2;
             }
             .print-agenda-content {
-                padding: 10px 15px;
-                border-left: 2px solid #e0e0e0;
-                margin-left: 10px;
+                padding: 25px;
                 white-space: pre-wrap;
-                min-height: 30px;
+                line-height: 1.7;
+                min-height: 50px;
+                color: #444;
+                font-size: 15px;
             }
+
+            /* ELEGANT FOOTER */
             .print-footer {
                 margin-top: 50px;
-                padding-top: 20px;
-                border-top: 1px solid #e0e0e0;
+                padding: 25px;
+                border-top: 3px solid #e3f2fd;
                 text-align: center;
-                color: #999;
+                background: linear-gradient(135deg, #f8fbfd 0%, #e3f2fd 100%);
+                border-radius: 10px;
+            }
+            .print-footer-content {
+                color: #1565c0;
+                font-weight: 600;
+                font-size: 14px;
+            }
+            .print-footer-date {
+                color: #666;
                 font-size: 12px;
+                margin-top: 8px;
             }
         }
 
@@ -415,6 +534,13 @@
             .right-panel { 
                 width: 100%; 
                 margin-top: 16px;
+            }
+
+            /* Print responsive */
+            @media print {
+                .print-metadata {
+                    grid-template-columns: 1fr;
+                }
             }
         }
     </style>
@@ -651,7 +777,7 @@
             renderMeetings();
         }
 
-        // Export to Word
+        // Export to Word - FORBEDRET DESIGN
         function exportToWord(id) {
             saveMeeting(id);
 
@@ -668,88 +794,146 @@
                             font-family: 'Calibri', 'Arial', sans-serif; 
                             line-height: 1.6;
                             max-width: 800px;
-                            margin: 40px auto;
-                            padding: 40px;
+                            margin: 30px auto;
+                            padding: 30px;
+                            color: #333;
                         }
                         .header {
+                            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                            padding: 30px;
+                            border-radius: 12px;
                             text-align: center;
-                            border-bottom: 3px solid #1976d2;
-                            padding-bottom: 20px;
                             margin-bottom: 30px;
+                            border: 3px solid #1976d2;
                         }
                         .logo {
-                            font-size: 24px;
-                            font-weight: bold;
-                            color: #1976d2;
-                            margin-bottom: 10px;
+                            font-size: 32px;
+                            font-weight: 800;
+                            color: #0d47a1;
+                            margin-bottom: 15px;
+                            letter-spacing: 2px;
                         }
                         h1 {
                             color: #1976d2;
                             font-size: 28px;
-                            margin: 10px 0;
+                            margin: 15px 0;
+                            font-weight: 700;
                         }
-                        .meta {
-                            color: #666;
+                        .metadata {
+                            background: #f8fbfd;
+                            padding: 25px;
+                            border-radius: 10px;
+                            margin: 25px 0;
+                            border-left: 6px solid #1976d2;
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 20px;
+                        }
+                        .metadata-full {
+                            grid-column: 1 / -1;
+                        }
+                        .metadata-item {
+                            background: white;
+                            padding: 15px;
+                            border-radius: 8px;
+                            border: 1px solid #e3f2fd;
+                        }
+                        .metadata-label {
+                            font-weight: 700;
+                            color: #1565c0;
                             font-size: 14px;
-                            margin-top: 10px;
-                            text-align: left;
-                            max-width: 600px;
-                            margin-left: auto;
-                            margin-right: auto;
+                            margin-bottom: 8px;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                        }
+                        .metadata-value {
+                            color: #333;
+                            font-size: 16px;
+                            line-height: 1.4;
                         }
                         .agenda-overview {
-                            background: #f8fbfd;
-                            padding: 20px;
-                            border-radius: 8px;
-                            margin: 25px 0;
-                            border-left: 5px solid #1976d2;
+                            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+                            padding: 25px;
+                            border-radius: 10px;
+                            margin: 30px 0;
+                            border-left: 6px solid #ffa726;
                         }
                         .agenda-overview h3 {
-                            color: #1976d2;
-                            font-size: 20px;
-                            margin-bottom: 15px;
+                            color: #e65100;
+                            font-size: 22px;
+                            margin-bottom: 20px;
                             font-weight: 700;
+                            text-align: center;
                         }
                         .agenda-list {
                             list-style: none;
                             padding: 0;
                             margin: 0;
+                            display: grid;
+                            gap: 12px;
                         }
                         .agenda-list li {
-                            padding: 8px 0;
-                            border-bottom: 1px solid #e3f2fd;
+                            background: white;
+                            padding: 12px 18px;
+                            border-radius: 6px;
+                            border-left: 4px solid #ff9800;
                             font-weight: 600;
-                            color: #1976d2;
+                            color: #bf360c;
                         }
-                        .agenda-list li:last-child {
-                            border-bottom: none;
+                        .section-divider {
+                            text-align: center;
+                            margin: 40px 0;
+                            position: relative;
+                        }
+                        .section-title {
+                            color: #1565c0;
+                            font-size: 24px;
+                            font-weight: 700;
+                            background: white;
+                            padding: 0 25px;
+                            display: inline-block;
                         }
                         .agenda-item {
-                            margin-bottom: 25px;
+                            margin-bottom: 30px;
                             page-break-inside: avoid;
+                            background: white;
+                            border-radius: 10px;
+                            overflow: hidden;
+                            border: 1px solid #e3f2fd;
                         }
                         .agenda-title {
-                            background: #e3f2fd;
-                            padding: 10px 15px;
-                            border-left: 4px solid #1976d2;
-                            font-weight: bold;
-                            font-size: 16px;
-                            margin-bottom: 10px;
+                            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                            padding: 18px 25px;
+                            font-weight: 700;
+                            font-size: 18px;
+                            color: #0d47a1;
+                            border-bottom: 3px solid #1976d2;
                         }
                         .agenda-content {
-                            padding: 10px 15px;
-                            border-left: 2px solid #e0e0e0;
-                            margin-left: 10px;
-                            min-height: 40px;
+                            padding: 25px;
                             white-space: pre-wrap;
+                            line-height: 1.7;
+                            min-height: 50px;
+                            color: #444;
+                            font-size: 15px;
                         }
                         .footer {
                             margin-top: 50px;
-                            padding-top: 20px;
-                            border-top: 1px solid #e0e0e0;
+                            padding: 25px;
+                            border-top: 3px solid #e3f2fd;
                             text-align: center;
-                            color: #999;
+                            background: linear-gradient(135deg, #f8fbfd, #e3f2fd);
+                            border-radius: 10px;
+                        }
+                        .footer-content {
+                            color: #1565c0;
+                            font-weight: 600;
+                            font-size: 14px;
+                        }
+                        .footer-date {
+                            color: #666;
                             font-size: 12px;
+                            margin-top: 8px;
                         }
                     </style>
                 </head>
@@ -757,12 +941,27 @@
                     <div class="header">
                         <div class="logo">SWITZEA ApS</div>
                         <h1>${meeting.title}</h1>
-                        <div class="meta">
-                            <p><strong>Dato:</strong> ${meeting.date}</p>
-                            ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
-                            ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
-                            <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
+                    </div>
+
+                    <div class="metadata">
+                        <div class="metadata-item">
+                            <div class="metadata-label">📅 Dato</div>
+                            <div class="metadata-value">${meeting.date}</div>
                         </div>
+                        <div class="metadata-item">
+                            <div class="metadata-label">🕐 Oprettet</div>
+                            <div class="metadata-value">${new Date(meeting.createdAt).toLocaleDateString('da-DK')}</div>
+                        </div>
+                        ${meeting.participants ? `
+                        <div class="metadata-item metadata-full">
+                            <div class="metadata-label">👥 Deltagere</div>
+                            <div class="metadata-value">${meeting.participants}</div>
+                        </div>` : ''}
+                        ${meeting.referent ? `
+                        <div class="metadata-item ${meeting.participants ? '' : 'metadata-full'}">
+                            <div class="metadata-label">✍️ Referent</div>
+                            <div class="metadata-value">${meeting.referent}</div>
+                        </div>` : ''}
                     </div>
 
                     <div class="agenda-overview">
@@ -774,7 +973,9 @@
                         </ul>
                     </div>
 
-                    <h2 style="color: #1976d2; text-align: center; margin: 30px 0 20px 0;">📝 Detaljerede punkter</h2>
+                    <div class="section-divider">
+                        <div class="section-title">📝 Detaljerede punkter</div>
+                    </div>
 
                     ${meeting.agenda.map(point => `
                         <div class="agenda-item">
@@ -784,7 +985,8 @@
                     `).join('')}
 
                     <div class="footer">
-                        <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
+                        <div class="footer-content">SWITZEA Referat App</div>
+                        <div class="footer-date">Genereret ${new Date().toLocaleDateString('da-DK')}</div>
                     </div>
                 </body>
                 </html>
@@ -799,7 +1001,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Export to PDF
+        // Export to PDF - FORBEDRET DESIGN
         function exportToPDF(id) {
             saveMeeting(id);
 
@@ -811,24 +1013,41 @@
                 <div class="print-header">
                     <div class="print-logo">SWITZEA ApS</div>
                     <h1 class="print-title">${meeting.title}</h1>
-                    <div class="print-meta">
-                        <p><strong>Dato:</strong> ${meeting.date}</p>
-                        ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
-                        ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
-                        <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
-                    </div>
                 </div>
 
-                <div style="background: #f8fbfd; padding: 20px; border-radius: 8px; margin: 25px 0; border-left: 5px solid #1976d2;">
-                    <h3 style="color: #1976d2; font-size: 20px; margin-bottom: 15px; font-weight: 700;">📋 Agendaoversigt</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0;">
+                <div class="print-metadata">
+                    <div class="print-metadata-item">
+                        <div class="print-metadata-label">📅 Dato</div>
+                        <div class="print-metadata-value">${meeting.date}</div>
+                    </div>
+                    <div class="print-metadata-item">
+                        <div class="print-metadata-label">🕐 Oprettet</div>
+                        <div class="print-metadata-value">${new Date(meeting.createdAt).toLocaleDateString('da-DK')}</div>
+                    </div>
+                    ${meeting.participants ? `
+                    <div class="print-metadata-item print-metadata-full">
+                        <div class="print-metadata-label">👥 Deltagere</div>
+                        <div class="print-metadata-value">${meeting.participants}</div>
+                    </div>` : ''}
+                    ${meeting.referent ? `
+                    <div class="print-metadata-item ${meeting.participants ? '' : 'print-metadata-full'}">
+                        <div class="print-metadata-label">✍️ Referent</div>
+                        <div class="print-metadata-value">${meeting.referent}</div>
+                    </div>` : ''}
+                </div>
+
+                <div class="print-agenda-overview">
+                    <h3>📋 Agendaoversigt</h3>
+                    <ul class="print-agenda-list">
                         ${meeting.agenda.map((point, index) => `
-                            <li style="padding: 8px 0; border-bottom: 1px solid #e3f2fd; font-weight: 600; color: #1976d2;">${index + 1}. ${point.title}</li>
+                            <li>${index + 1}. ${point.title}</li>
                         `).join('')}
                     </ul>
                 </div>
 
-                <h2 style="color: #1976d2; text-align: center; margin: 30px 0 20px 0;">📝 Detaljerede punkter</h2>
+                <div class="print-section-divider">
+                    <div class="print-section-title">📝 Detaljerede punkter</div>
+                </div>
 
                 ${meeting.agenda.map(point => `
                     <div class="print-agenda-item">
@@ -838,7 +1057,8 @@
                 `).join('')}
 
                 <div class="print-footer">
-                    <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
+                    <div class="print-footer-content">SWITZEA Referat App</div>
+                    <div class="print-footer-date">Genereret ${new Date().toLocaleDateString('da-DK')}</div>
                 </div>
             `;
 
