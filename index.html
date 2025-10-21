@@ -17,42 +17,39 @@
             min-height: 100vh; 
         }
 
-        /* Sidebar - Canva-inspireret */
+        /* Sidebar */
         .sidebar { 
             width: 260px; 
             background: #ffffff; 
             border-right: 1px solid #e0e0e0; 
             display: flex; 
             flex-direction: column; 
-            box-shadow: 2px 0 8px rgba(62,179,250,0.12);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
         }
         .sidebar h1 { 
-            background: linear-gradient(135deg, #3eb3fa 0%, #1566ce 100%);
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
             color: white; 
             padding: 20px; 
             margin: 0; 
             font-size: 20px;
             text-align: center;
-            font-weight: 700;
-            letter-spacing: 0.5px;
         }
         .sidebar button {
-            background: linear-gradient(135deg, #3eb3fa, #2292e7);
+            background: #1976d2;
             color: white;
             border: none;
             padding: 12px 16px;
             margin: 16px 12px 8px 12px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(62,179,250,0.25);
         }
         .sidebar button:hover {
-            background: linear-gradient(135deg, #2292e7, #1566ce);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(62,179,250,0.35);
+            background: #1565c0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
         }
         .meetings-list { 
             flex: 1; 
@@ -60,33 +57,30 @@
             padding: 8px 12px; 
         }
         .meeting { 
-            border: 1px solid #e8f4fd; 
-            padding: 12px; 
-            margin-bottom: 10px; 
-            border-radius: 8px; 
+            border: 1px solid #e0e0e0; 
+            padding: 10px; 
+            margin-bottom: 8px; 
+            border-radius: 6px; 
             cursor: pointer; 
-            background: #fafbfc;
+            background: #fafafa;
             transition: all 0.2s;
-            box-shadow: 0 1px 3px rgba(62,179,250,0.08);
         }
         .meeting:hover { 
-            background: #e8f4fd; 
-            border-color: #3eb3fa;
+            background: #e3f2fd; 
+            border-color: #1976d2;
             transform: translateX(3px);
-            box-shadow: 0 2px 8px rgba(62,179,250,0.15);
         }
         .meeting.active {
-            background: linear-gradient(135deg, #e8f4fd, #cce7f7);
-            border-color: #2292e7;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(62,179,250,0.2);
+            background: #e3f2fd;
+            border-color: #1976d2;
+            font-weight: 500;
         }
 
-        /* Main Content - Canva style */
+        /* Main Content */
         .main { 
             flex: 1; 
             padding: 20px; 
-            background: linear-gradient(135deg, #f8fbfd 0%, #f0f2f5 100%); 
+            background: #f0f2f5; 
             display: flex; 
             flex-direction: row; 
             gap: 20px;
@@ -94,283 +88,242 @@
         #meetingContent { 
             flex: 2; 
             background: white;
-            padding: 28px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(62,179,250,0.12);
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .meeting-header { 
-            background: linear-gradient(135deg, #3eb3fa, #2292e7);
-            color: white;
-            margin: -28px -28px 25px -28px;
-            padding: 25px 28px;
-            border-radius: 15px 15px 0 0;
+            border-bottom: 3px solid #1976d2; 
+            margin-bottom: 20px; 
+            padding-bottom: 12px;
         }
         .meeting-header h2 {
             margin: 0 0 8px 0;
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            color: #1976d2;
         }
         .meeting-header p {
-            margin: 0;
-            font-size: 18px;
-            opacity: 0.9;
+            margin: 0 0 8px 0;
+            color: #666;
         }
 
-        /* Metadata fields - Canva inspireret */
+        /* Metadata fields */
         .metadata-fields {
-            background: linear-gradient(135deg, #e8f4fd, #f0f9ff);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 2px solid #bce6fd;
-            box-shadow: 0 2px 8px rgba(62,179,250,0.08);
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1976d2;
         }
         .metadata-fields label {
             display: block;
-            font-weight: 700;
-            color: #1566ce;
-            margin-bottom: 8px;
-            font-size: 16px;
-            letter-spacing: 0.3px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 14px;
         }
         .metadata-fields input,
         .metadata-fields textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #bce6fd;
-            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-family: inherit;
-            font-size: 15px;
-            margin-bottom: 15px;
-            background: white;
-            transition: all 0.2s;
+            font-size: 14px;
+            margin-bottom: 12px;
         }
         .metadata-fields textarea {
-            min-height: 65px;
+            min-height: 60px;
             resize: vertical;
         }
         .metadata-fields input:focus,
         .metadata-fields textarea:focus {
             outline: none;
-            border-color: #3eb3fa;
-            box-shadow: 0 0 0 4px rgba(62,179,250,0.15);
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
         /* Agenda input section */
         .agenda-input-section {
-            background: linear-gradient(135deg, #fff8e1, #fff3c4);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border: 2px solid #ffe082;
-            box-shadow: 0 2px 8px rgba(255,193,7,0.1);
+            background: #fff9e6;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffa726;
         }
         .agenda-input-section label {
             display: block;
-            font-weight: 700;
-            color: #e65100;
+            font-weight: 600;
+            color: #333;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 14px;
         }
         .agenda-input-section textarea {
             width: 100%;
             min-height: 120px;
-            padding: 12px;
-            border: 2px solid #ffe082;
-            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-family: inherit;
-            font-size: 15px;
-            margin-bottom: 12px;
-            background: white;
+            font-size: 14px;
+            margin-bottom: 10px;
         }
         .agenda-input-section button {
-            background: linear-gradient(135deg, #ffc107, #ff9800);
-            color: #543b00;
-            font-weight: 700;
-            border-radius: 8px;
-            padding: 12px 20px;
+            background: #ffa726;
             margin: 0;
-            transition: all 0.2s;
         }
         .agenda-input-section button:hover {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255,193,7,0.3);
+            background: #fb8c00;
         }
         .agenda-input-section .help-text {
-            font-size: 13px;
-            color: #8d4e00;
+            font-size: 12px;
+            color: #666;
             margin-top: 8px;
             font-style: italic;
         }
 
-        /* Agenda Points - Canva style */
+        /* Agenda Points */
         .agenda-point { 
-            background: linear-gradient(135deg, #f8fbfd, #ffffff); 
-            padding: 20px; 
-            margin-bottom: 18px; 
-            border-left: 6px solid #3eb3fa; 
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(62,179,250,0.08);
-            transition: all 0.2s;
-        }
-        .agenda-point:hover {
-            box-shadow: 0 4px 15px rgba(62,179,250,0.15);
-            transform: translateY(-2px);
+            background: #f8f9fa; 
+            padding: 16px; 
+            margin-bottom: 14px; 
+            border-left: 4px solid #1976d2; 
+            border-radius: 6px; 
         }
         .agenda-point h4 {
-            margin: 0 0 12px 0;
-            color: #1566ce;
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: 0.2px;
+            margin: 0 0 10px 0;
+            color: #333;
         }
         textarea { 
             width: 100%; 
-            min-height: 85px; 
-            border: 2px solid #e3f2fd; 
-            border-radius: 8px; 
-            padding: 12px; 
+            min-height: 80px; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            padding: 10px; 
             font-family: inherit;
-            font-size: 15px;
+            font-size: 14px;
             resize: vertical;
-            transition: all 0.2s;
-            background: white;
+            transition: border 0.2s;
         }
         textarea:focus {
             outline: none;
-            border-color: #3eb3fa;
-            box-shadow: 0 0 0 4px rgba(62,179,250,0.12);
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
         /* Highlight */
         .highlight {
-            background: linear-gradient(135deg, #fff59d, #ffeb3b);
+            background-color: yellow;
             font-weight: bold;
-            padding: 3px 6px;
-            border-radius: 4px;
+            padding: 2px 4px;
+            border-radius: 3px;
         }
 
-        /* Buttons - Canva inspireret */
+        /* Buttons */
         button { 
-            background: linear-gradient(135deg, #2196f3, #1976d2);
+            background-color: #1976d2; 
             color: white; 
             border: none; 
-            padding: 12px 20px; 
+            padding: 10px 18px; 
             margin: 8px 4px 8px 0; 
             cursor: pointer; 
-            border-radius: 8px; 
-            font-size: 15px;
-            font-weight: 600;
+            border-radius: 6px; 
+            font-size: 14px;
+            font-weight: 500;
             transition: all 0.2s;
-            box-shadow: 0 2px 6px rgba(33,150,243,0.25);
         }
         button:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(33,150,243,0.35);
+            background-color: #1565c0; 
+            box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
         }
         button:active {
             transform: scale(0.98);
         }
         .btn-export {
-            background: linear-gradient(135deg, #4caf50, #388e3c);
-            box-shadow: 0 2px 6px rgba(76,175,80,0.25);
+            background: #2e7d32;
         }
         .btn-export:hover {
-            box-shadow: 0 4px 12px rgba(76,175,80,0.35);
+            background: #1b5e20;
         }
         .btn-pdf {
-            background: linear-gradient(135deg, #f44336, #d32f2f);
-            box-shadow: 0 2px 6px rgba(244,67,54,0.25);
+            background: #c62828;
         }
         .btn-pdf:hover {
-            box-shadow: 0 4px 12px rgba(244,67,54,0.35);
+            background: #b71c1c;
         }
 
         /* Right Panel */
         .right-panel { 
             width: 340px; 
             background: white; 
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(62,179,250,0.12);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .right-panel h3 {
-            margin: 0 0 20px 0;
-            color: #1566ce;
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 0.3px;
+            margin: 0 0 16px 0;
+            color: #333;
+            font-size: 18px;
         }
         .search-box { 
-            margin-bottom: 18px; 
+            margin-bottom: 16px; 
         }
         .search-box input { 
             width: 100%; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 2px solid #e3f2fd; 
-            font-size: 15px;
-            transition: all 0.2s;
-            background: #fafbfc;
+            padding: 10px; 
+            border-radius: 6px; 
+            border: 1px solid #ddd; 
+            font-size: 14px;
+            transition: border 0.2s;
         }
         .search-box input:focus {
             outline: none;
-            border-color: #3eb3fa;
-            box-shadow: 0 0 0 4px rgba(62,179,250,0.12);
-            background: white;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
         #searchResults {
-            max-height: calc(100vh - 280px);
+            max-height: calc(100vh - 240px);
             overflow-y: auto;
         }
 
         /* Search Result Item */
         .search-result {
-            border: 1px solid #e8f4fd;
-            padding: 15px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            background: #fafbfc;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background: #fafafa;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 1px 4px rgba(62,179,250,0.08);
         }
         .search-result:hover {
-            background: linear-gradient(135deg, #e8f4fd, #f0f9ff);
-            border-color: #3eb3fa;
+            background: #e3f2fd;
+            border-color: #1976d2;
             transform: translateX(3px);
-            box-shadow: 0 2px 8px rgba(62,179,250,0.15);
         }
         .search-result-title {
-            font-weight: 700;
-            color: #1566ce;
-            margin-bottom: 6px;
-            font-size: 16px;
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 4px;
         }
         .search-result-location {
-            font-size: 13px;
+            font-size: 12px;
             color: #666;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .search-result-snippet {
-            font-size: 14px;
+            font-size: 13px;
             color: #333;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             color: #999;
         }
         .empty-state h2 {
-            color: #2292e7;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            color: #666;
         }
 
         /* Print/PDF Styles */
@@ -389,138 +342,57 @@
             }
             .print-view {
                 display: block !important;
-                padding: 30px;
+                padding: 40px;
                 font-family: 'Arial', sans-serif;
-                max-width: 800px;
-                margin: 0 auto;
             }
             .print-header {
                 text-align: center;
-                background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-                padding: 25px;
-                border-radius: 10px;
+                border-bottom: 3px solid #1976d2;
+                padding-bottom: 20px;
                 margin-bottom: 30px;
-                border: 2px solid #2196f3;
             }
             .print-logo {
-                font-size: 28px;
-                font-weight: 800;
-                color: #1565c0;
-                margin-bottom: 12px;
-                letter-spacing: 1px;
+                font-size: 24px;
+                font-weight: bold;
+                color: #1976d2;
+                margin-bottom: 10px;
             }
             .print-title {
                 color: #1976d2;
-                font-size: 32px;
+                font-size: 28px;
                 margin: 10px 0;
-                font-weight: 800;
-            }
-            .print-meta-section {
-                background: #f8fbfd;
-                padding: 20px;
-                border-radius: 8px;
-                margin: 20px 0;
-                border-left: 5px solid #2196f3;
             }
             .print-meta {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
-                margin: 15px 0;
-            }
-            .print-meta-item {
-                background: white;
-                padding: 12px;
-                border-radius: 6px;
-                border: 1px solid #e3f2fd;
-            }
-            .print-meta-label {
-                font-weight: 700;
-                color: #1565c0;
+                color: #666;
                 font-size: 14px;
-                margin-bottom: 5px;
-            }
-            .print-meta-value {
-                color: #333;
-                font-size: 15px;
-            }
-            .print-agenda-overview {
-                background: #fff8e1;
-                padding: 20px;
-                border-radius: 8px;
-                margin: 25px 0;
-                border-left: 5px solid #ffc107;
-            }
-            .print-agenda-overview h3 {
-                color: #e65100;
-                font-size: 20px;
-                margin-bottom: 15px;
-                font-weight: 700;
-            }
-            .print-agenda-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-            .print-agenda-list li {
-                padding: 8px 0;
-                border-bottom: 1px solid #ffecb3;
-                font-weight: 600;
-                color: #bf360c;
-            }
-            .print-agenda-list li:last-child {
-                border-bottom: none;
-            }
-            .print-details-title {
-                color: #1565c0;
-                font-size: 24px;
-                font-weight: 700;
-                margin: 30px 0 20px 0;
-                text-align: center;
-                border-bottom: 2px solid #2196f3;
-                padding-bottom: 10px;
+                margin-top: 10px;
             }
             .print-agenda-item {
                 margin-bottom: 25px;
                 page-break-inside: avoid;
-                background: #fafbfd;
-                border-radius: 8px;
-                overflow: hidden;
-                border: 1px solid #e3f2fd;
             }
             .print-agenda-title {
-                background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-                padding: 15px 20px;
-                font-weight: 700;
-                font-size: 18px;
-                color: #1565c0;
-                border-bottom: 2px solid #2196f3;
+                background: #e3f2fd;
+                padding: 10px 15px;
+                border-left: 4px solid #1976d2;
+                font-weight: bold;
+                font-size: 16px;
+                margin-bottom: 10px;
             }
             .print-agenda-content {
-                padding: 20px;
+                padding: 10px 15px;
+                border-left: 2px solid #e0e0e0;
+                margin-left: 10px;
                 white-space: pre-wrap;
-                line-height: 1.6;
-                min-height: 40px;
-                color: #333;
+                min-height: 30px;
             }
             .print-footer {
-                margin-top: 40px;
+                margin-top: 50px;
                 padding-top: 20px;
-                border-top: 2px solid #e3f2fd;
+                border-top: 1px solid #e0e0e0;
                 text-align: center;
-                background: #f8fbfd;
-                padding: 20px;
-                border-radius: 8px;
-            }
-            .print-footer-logo {
-                font-weight: 700;
-                color: #1565c0;
-                font-size: 16px;
-                margin-bottom: 8px;
-            }
-            .print-footer-date {
-                color: #666;
-                font-size: 14px;
+                color: #999;
+                font-size: 12px;
             }
         }
 
@@ -538,11 +410,7 @@
                 padding: 16px;
             }
             #meetingContent { 
-                padding: 20px;
-            }
-            .meeting-header {
-                margin: -20px -20px 20px -20px;
-                padding: 20px;
+                padding: 16px;
             }
             .right-panel { 
                 width: 100%; 
@@ -677,7 +545,7 @@
             listDiv.innerHTML = '';
 
             if (meetings.length === 0) {
-                listDiv.innerHTML = '<p style="padding: 15px; color: #999; text-align: center; font-style: italic;">Ingen referater endnu</p>';
+                listDiv.innerHTML = '<p style="padding: 10px; color: #999; text-align: center;">Ingen referater endnu</p>';
                 return;
             }
 
@@ -687,7 +555,7 @@
                 if (m.id === currentMeetingId) {
                     div.classList.add('active');
                 }
-                div.innerHTML = `<strong>${m.title}</strong><br><small style="color: #666; font-size: 13px;">${m.date}</small>`;
+                div.innerHTML = `<strong>${m.title}</strong><br><small style="color: #666;">${m.date}</small>`;
                 div.onclick = () => openMeeting(m.id);
                 listDiv.appendChild(div);
             });
@@ -731,8 +599,8 @@
                 div.id = 'point-' + i;
 
                 if (highlightPointIndex === i) {
-                    div.style.background = 'linear-gradient(135deg, #fff9c4, #ffeb3b)';
-                    div.style.borderLeft = '6px solid #ffc107';
+                    div.style.background = '#fff9c4';
+                    div.style.borderLeft = '4px solid #fbc02d';
                 }
 
                 div.innerHTML = `
@@ -743,7 +611,7 @@
             });
 
             const buttonContainer = document.createElement('div');
-            buttonContainer.style.marginTop = '25px';
+            buttonContainer.style.marginTop = '20px';
             buttonContainer.className = 'no-print';
 
             const saveBtn = document.createElement('button');
@@ -762,7 +630,7 @@
 
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = '🗑️ Slet referat';
-            deleteBtn.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+            deleteBtn.style.background = '#d32f2f';
             deleteBtn.onclick = () => deleteMeeting(meeting.id);
 
             buttonContainer.appendChild(saveBtn);
@@ -783,7 +651,7 @@
             renderMeetings();
         }
 
-        // Export to Word - CANVA STYLE med agendaoversigt
+        // Export to Word
         function exportToWord(id) {
             saveMeeting(id);
 
@@ -797,72 +665,47 @@
                     <title>${meeting.title}</title>
                     <style>
                         body { 
-                            font-family: 'Calibri', 'Segoe UI', sans-serif; 
+                            font-family: 'Calibri', 'Arial', sans-serif; 
                             line-height: 1.6;
                             max-width: 800px;
-                            margin: 30px auto;
+                            margin: 40px auto;
                             padding: 40px;
-                            background: white;
                         }
                         .header {
                             text-align: center;
-                            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-                            padding: 25px;
-                            border-radius: 10px;
+                            border-bottom: 3px solid #1976d2;
+                            padding-bottom: 20px;
                             margin-bottom: 30px;
-                            border: 2px solid #2196f3;
                         }
                         .logo {
-                            font-size: 28px;
-                            font-weight: 800;
-                            color: #1565c0;
-                            margin-bottom: 12px;
-                            letter-spacing: 1px;
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #1976d2;
+                            margin-bottom: 10px;
                         }
                         h1 {
                             color: #1976d2;
-                            font-size: 32px;
+                            font-size: 28px;
                             margin: 10px 0;
-                            font-weight: 800;
                         }
-                        .meta-section {
+                        .meta {
+                            color: #666;
+                            font-size: 14px;
+                            margin-top: 10px;
+                            text-align: left;
+                            max-width: 600px;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+                        .agenda-overview {
                             background: #f8fbfd;
                             padding: 20px;
                             border-radius: 8px;
-                            margin: 20px 0;
-                            border-left: 5px solid #2196f3;
-                        }
-                        .meta-grid {
-                            display: grid;
-                            grid-template-columns: 1fr 1fr;
-                            gap: 15px;
-                            margin: 15px 0;
-                        }
-                        .meta-item {
-                            background: white;
-                            padding: 12px;
-                            border-radius: 6px;
-                            border: 1px solid #e3f2fd;
-                        }
-                        .meta-label {
-                            font-weight: 700;
-                            color: #1565c0;
-                            font-size: 14px;
-                            margin-bottom: 5px;
-                        }
-                        .meta-value {
-                            color: #333;
-                            font-size: 15px;
-                        }
-                        .agenda-overview {
-                            background: #fff8e1;
-                            padding: 20px;
-                            border-radius: 8px;
                             margin: 25px 0;
-                            border-left: 5px solid #ffc107;
+                            border-left: 5px solid #1976d2;
                         }
                         .agenda-overview h3 {
-                            color: #e65100;
+                            color: #1976d2;
                             font-size: 20px;
                             margin-bottom: 15px;
                             font-weight: 700;
@@ -874,63 +717,39 @@
                         }
                         .agenda-list li {
                             padding: 8px 0;
-                            border-bottom: 1px solid #ffecb3;
+                            border-bottom: 1px solid #e3f2fd;
                             font-weight: 600;
-                            color: #bf360c;
+                            color: #1976d2;
                         }
                         .agenda-list li:last-child {
                             border-bottom: none;
                         }
-                        .details-title {
-                            color: #1565c0;
-                            font-size: 24px;
-                            font-weight: 700;
-                            margin: 30px 0 20px 0;
-                            text-align: center;
-                            border-bottom: 2px solid #2196f3;
-                            padding-bottom: 10px;
-                        }
                         .agenda-item {
                             margin-bottom: 25px;
                             page-break-inside: avoid;
-                            background: #fafbfd;
-                            border-radius: 8px;
-                            overflow: hidden;
-                            border: 1px solid #e3f2fd;
                         }
                         .agenda-title {
-                            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-                            padding: 15px 20px;
-                            font-weight: 700;
-                            font-size: 18px;
-                            color: #1565c0;
-                            border-bottom: 2px solid #2196f3;
+                            background: #e3f2fd;
+                            padding: 10px 15px;
+                            border-left: 4px solid #1976d2;
+                            font-weight: bold;
+                            font-size: 16px;
+                            margin-bottom: 10px;
                         }
                         .agenda-content {
-                            padding: 20px;
-                            white-space: pre-wrap;
-                            line-height: 1.6;
+                            padding: 10px 15px;
+                            border-left: 2px solid #e0e0e0;
+                            margin-left: 10px;
                             min-height: 40px;
-                            color: #333;
+                            white-space: pre-wrap;
                         }
                         .footer {
-                            margin-top: 40px;
+                            margin-top: 50px;
                             padding-top: 20px;
-                            border-top: 2px solid #e3f2fd;
+                            border-top: 1px solid #e0e0e0;
                             text-align: center;
-                            background: #f8fbfd;
-                            padding: 20px;
-                            border-radius: 8px;
-                        }
-                        .footer-logo {
-                            font-weight: 700;
-                            color: #1565c0;
-                            font-size: 16px;
-                            margin-bottom: 8px;
-                        }
-                        .footer-date {
-                            color: #666;
-                            font-size: 14px;
+                            color: #999;
+                            font-size: 12px;
                         }
                     </style>
                 </head>
@@ -938,28 +757,11 @@
                     <div class="header">
                         <div class="logo">SWITZEA ApS</div>
                         <h1>${meeting.title}</h1>
-                    </div>
-
-                    <div class="meta-section">
-                        <div class="meta-grid">
-                            <div class="meta-item">
-                                <div class="meta-label">📅 Dato</div>
-                                <div class="meta-value">${meeting.date}</div>
-                            </div>
-                            ${meeting.referent ? `
-                            <div class="meta-item">
-                                <div class="meta-label">✍️ Referent</div>
-                                <div class="meta-value">${meeting.referent}</div>
-                            </div>` : ''}
-                        </div>
-                        ${meeting.participants ? `
-                        <div class="meta-item">
-                            <div class="meta-label">👥 Deltagere</div>
-                            <div class="meta-value">${meeting.participants}</div>
-                        </div>` : ''}
-                        <div class="meta-item">
-                            <div class="meta-label">🕐 Oprettet</div>
-                            <div class="meta-value">${new Date(meeting.createdAt).toLocaleString('da-DK')}</div>
+                        <div class="meta">
+                            <p><strong>Dato:</strong> ${meeting.date}</p>
+                            ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
+                            ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
+                            <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
                         </div>
                     </div>
 
@@ -972,9 +774,9 @@
                         </ul>
                     </div>
 
-                    <div class="details-title">📝 Detaljerede punkter</div>
+                    <h2 style="color: #1976d2; text-align: center; margin: 30px 0 20px 0;">📝 Detaljerede punkter</h2>
 
-                    ${meeting.agenda.map((point, index) => `
+                    ${meeting.agenda.map(point => `
                         <div class="agenda-item">
                             <div class="agenda-title">${point.title}</div>
                             <div class="agenda-content">${point.content || '<em>Intet indhold</em>'}</div>
@@ -982,8 +784,7 @@
                     `).join('')}
 
                     <div class="footer">
-                        <div class="footer-logo">SWITZEA Referat App</div>
-                        <div class="footer-date">Genereret ${new Date().toLocaleDateString('da-DK')}</div>
+                        <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
                     </div>
                 </body>
                 </html>
@@ -998,7 +799,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Export to PDF - CANVA STYLE
+        // Export to PDF
         function exportToPDF(id) {
             saveMeeting(id);
 
@@ -1010,41 +811,24 @@
                 <div class="print-header">
                     <div class="print-logo">SWITZEA ApS</div>
                     <h1 class="print-title">${meeting.title}</h1>
-                </div>
-
-                <div class="print-meta-section">
                     <div class="print-meta">
-                        <div class="print-meta-item">
-                            <div class="print-meta-label">📅 Dato</div>
-                            <div class="print-meta-value">${meeting.date}</div>
-                        </div>
-                        ${meeting.referent ? `
-                        <div class="print-meta-item">
-                            <div class="print-meta-label">✍️ Referent</div>
-                            <div class="print-meta-value">${meeting.referent}</div>
-                        </div>` : ''}
-                    </div>
-                    ${meeting.participants ? `
-                    <div class="print-meta-item" style="grid-column: 1 / -1;">
-                        <div class="print-meta-label">👥 Deltagere</div>
-                        <div class="print-meta-value">${meeting.participants}</div>
-                    </div>` : ''}
-                    <div class="print-meta-item" style="grid-column: 1 / -1;">
-                        <div class="print-meta-label">🕐 Oprettet</div>
-                        <div class="print-meta-value">${new Date(meeting.createdAt).toLocaleString('da-DK')}</div>
+                        <p><strong>Dato:</strong> ${meeting.date}</p>
+                        ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
+                        ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
+                        <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
                     </div>
                 </div>
 
-                <div class="print-agenda-overview">
-                    <h3>📋 Agendaoversigt</h3>
-                    <ul class="print-agenda-list">
+                <div style="background: #f8fbfd; padding: 20px; border-radius: 8px; margin: 25px 0; border-left: 5px solid #1976d2;">
+                    <h3 style="color: #1976d2; font-size: 20px; margin-bottom: 15px; font-weight: 700;">📋 Agendaoversigt</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
                         ${meeting.agenda.map((point, index) => `
-                            <li>${index + 1}. ${point.title}</li>
+                            <li style="padding: 8px 0; border-bottom: 1px solid #e3f2fd; font-weight: 600; color: #1976d2;">${index + 1}. ${point.title}</li>
                         `).join('')}
                     </ul>
                 </div>
 
-                <div class="print-details-title">📝 Detaljerede punkter</div>
+                <h2 style="color: #1976d2; text-align: center; margin: 30px 0 20px 0;">📝 Detaljerede punkter</h2>
 
                 ${meeting.agenda.map(point => `
                     <div class="print-agenda-item">
@@ -1054,8 +838,7 @@
                 `).join('')}
 
                 <div class="print-footer">
-                    <div class="print-footer-logo">SWITZEA Referat App</div>
-                    <div class="print-footer-date">Genereret ${new Date().toLocaleDateString('da-DK')}</div>
+                    <p>Genereret af SWITZEA Referat App • ${new Date().toLocaleDateString('da-DK')}</p>
                 </div>
             `;
 
@@ -1122,7 +905,7 @@
             resultsContainer.innerHTML = '';
 
             if (!term || term.trim() === '') {
-                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 25px; font-style: italic;">Indtast søgeord</p>';
+                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Indtast søgeord</p>';
                 return;
             }
 
@@ -1179,7 +962,7 @@
             });
 
             if (results.length === 0) {
-                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 25px; font-style: italic;">Ingen resultater fundet</p>';
+                resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Ingen resultater fundet</p>';
                 return;
             }
 
@@ -1196,18 +979,15 @@
             });
         }
 
-        // Search event listener
         document.getElementById('searchInput').addEventListener('input', (e) => {
             currentSearchTerm = e.target.value;
             performSearch(currentSearchTerm);
         });
 
-        // Save to localStorage
         function saveMeetingsLocal() {
             localStorage.setItem('switzea-referater', JSON.stringify(meetings));
         }
 
-        // Load from localStorage
         function loadMeetingsLocal() {
             const saved = localStorage.getItem('switzea-referater');
             if (saved) {
@@ -1220,13 +1000,12 @@
             }
         }
 
-        // Initialize app on load
         window.onload = () => {
             loadMeetingsLocal();
             renderMeetings();
 
             const resultsContainer = document.getElementById('searchResults');
-            resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 25px; font-style: italic;">Indtast søgeord</p>';
+            resultsContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Indtast søgeord</p>';
         };
     </script>
 </body>
