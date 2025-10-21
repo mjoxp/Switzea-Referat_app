@@ -102,8 +102,44 @@
             color: #1976d2;
         }
         .meeting-header p {
-            margin: 0;
+            margin: 0 0 8px 0;
             color: #666;
+        }
+
+        /* Metadata fields */
+        .metadata-fields {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #1976d2;
+        }
+        .metadata-fields label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .metadata-fields input,
+        .metadata-fields textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .metadata-fields textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .metadata-fields input:focus,
+        .metadata-fields textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
         }
 
         /* Agenda Points */
@@ -390,6 +426,7 @@
                 id,
                 title: 'Statusmøde ' + new Date().toLocaleDateString('da-DK'),
                 date: today,
+                participants: '',
                 referent: '',
                 agenda: [
                     { title: 'Punkt 1: Dagsorden', content: '' },
@@ -437,11 +474,24 @@
             const meeting = meetings.find(x => x.id === id);
             if (!meeting) return;
 
+            // Ensure participants field exists (for backwards compatibility)
+            if (meeting.participants === undefined) {
+                meeting.participants = '';
+            }
+
             const contentDiv = document.getElementById('meetingContent');
             contentDiv.innerHTML = `
                 <div class='meeting-header'>
                     <h2>${meeting.title}</h2>
                     <p>📅 ${meeting.date}</p>
+                </div>
+
+                <div class="metadata-fields">
+                    <label>👥 Deltagere:</label>
+                    <textarea id="participantsField" placeholder="Indtast navne på deltagere, fx: Anna, Bo, Dorthe">${meeting.participants || ''}</textarea>
+
+                    <label>✍️ Referent:</label>
+                    <input type="text" id="referentField" placeholder="Navn på referent" value="${meeting.referent || ''}" />
                 </div>
             `;
 
@@ -503,7 +553,7 @@
             renderMeetings();
         }
 
-        // Export to Word (HTML format)
+        // Export to Word
         function exportToWord(id) {
             saveMeeting(id);
 
@@ -544,6 +594,10 @@
                             color: #666;
                             font-size: 14px;
                             margin-top: 10px;
+                            text-align: left;
+                            max-width: 600px;
+                            margin-left: auto;
+                            margin-right: auto;
                         }
                         .agenda-item {
                             margin-bottom: 25px;
@@ -580,6 +634,7 @@
                         <h1>${meeting.title}</h1>
                         <div class="meta">
                             <p><strong>Dato:</strong> ${meeting.date}</p>
+                            ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
                             ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
                             <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
                         </div>
@@ -608,7 +663,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Export to PDF using browser print
+        // Export to PDF
         function exportToPDF(id) {
             saveMeeting(id);
 
@@ -622,6 +677,7 @@
                     <h1 class="print-title">${meeting.title}</h1>
                     <div class="print-meta">
                         <p><strong>Dato:</strong> ${meeting.date}</p>
+                        ${meeting.participants ? `<p><strong>Deltagere:</strong> ${meeting.participants}</p>` : ''}
                         ${meeting.referent ? `<p><strong>Referent:</strong> ${meeting.referent}</p>` : ''}
                         <p><strong>Oprettet:</strong> ${new Date(meeting.createdAt).toLocaleString('da-DK')}</p>
                     </div>
@@ -639,7 +695,6 @@
                 </div>
             `;
 
-            // Trigger print dialog - user can save as PDF
             setTimeout(() => {
                 window.print();
             }, 100);
@@ -650,6 +705,13 @@
             const meeting = meetings.find(m => m.id === id);
             if (!meeting) return;
 
+            // Save metadata fields
+            const participantsField = document.getElementById('participantsField');
+            const referentField = document.getElementById('referentField');
+            if (participantsField) meeting.participants = participantsField.value;
+            if (referentField) meeting.referent = referentField.value;
+
+            // Save agenda content
             meeting.agenda.forEach((p, i) => {
                 const textarea = document.getElementById(`a${i}`);
                 if (textarea) {
@@ -713,6 +775,18 @@
                         meetingDate: meeting.date,
                         location: 'Titel',
                         snippet: meeting.title,
+                        pointIndex: null
+                    });
+                }
+
+                // Search in participants
+                if (meeting.participants && meeting.participants.toLowerCase().includes(searchTerm)) {
+                    results.push({
+                        meetingId: meeting.id,
+                        meetingTitle: meeting.title,
+                        meetingDate: meeting.date,
+                        location: 'Deltagere',
+                        snippet: meeting.participants,
                         pointIndex: null
                     });
                 }
